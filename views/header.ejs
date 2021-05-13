@@ -1,12 +1,20 @@
 <div class="top-navbar">
-  <p style="color: #fff; text-align: left; margin-left: 30px">
-    Call Us at: 9876543210, 01-2345678
+  <p class="float-left" style="color: #fff; ">
+    Call Us at: 987634333210, 01-2345678
   </p>
   <% if (user) { %>
+    <% if (user.role == 'admin' || user.role == 'superadmin') { %>
   <a href="/dashboard" class="login font-weight-bold">
-    <%= user.name.toUpperCase() %>
+    <% } %>
+    <% if (user.role == 'student') { %>
+  <a href="/me" class="login font-weight-bold">
+    <% } %>
+    <div class="profile-picture "><img class=" img-fluid rounded-circle" src="/images/users/<%= user.picture %>" alt="" srcset=""></div>
+    
+    <%= user.name.split(' ')[0].toUpperCase() %>
   </a>
   <a href="/logout" class="register font-weight-bold"> Logout </a>
+
   <%} if(!user) { %>
   <a href="/login" class="login font-weight-bold"> Login </a>
   <a href="/register" class="register font-weight-bold"> Register </a>
@@ -15,10 +23,10 @@
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <div class="container">
-    <div class="logo"><img src="/images/logo.jpg" alt="logo" /></div>
-    <a href="/" class="navbar-brand text-success font-weight-bold">
-      HeraldCollege</a
-    >
+   
+    
+      <a  href="/" class=" text-success font-weight-bold navbar-brand"> <!-- <img src="/images/logo.png" class="img-fluid"  alt="logo" /> --> LaughLoud</a>
+     
     <button
       class="navbar-toggler"
       type="button"
@@ -33,9 +41,19 @@
         <li class="nav-item">
           <a href="/" class="nav-link text-white"> Home </a>
         </li>
-        <li class="nav-item">
+        <% if(user) {%>
+         <li class="nav-item">
           <a href="/events" class="nav-link text-white"> Events </a>
         </li>
+        <%}%>
+        <% if(!user) {%>
+          <li class="nav-item">
+           <a href="/login" class="nav-link text-white"> Events </a>
+         </li>
+         <%}%>
+      
+        
+        
         <li class="nav-item">
           <a href="/gallery" class="nav-link text-white"> Gallery </a>
         </li>
@@ -59,7 +77,7 @@
 
 
             <% for(var i=0; i<courses.length; i++) {%>
-               <a class="dropdown-item" href="/courses/<%= courses[i].courseID %>"
+               <a class="dropdown-item" href="/courses/<%= courses[i]._id %>"
               ><%= courses[i].tag %></a
             >
            <% } %> <%}%>

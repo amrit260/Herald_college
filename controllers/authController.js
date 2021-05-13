@@ -19,6 +19,23 @@ exports.signup = catchAsync(async (req, res, next) => {
     user,
   });
 });
+exports.addAdmin = catchAsync(async (req, res, next) => {
+  const data = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    role: req.body.role,
+  };
+  const user = await User.create(data);
+
+  let redirectURL = `/dashboard`;
+  console.log(redirectURL);
+  res.status(200).render('success', {
+    message: user.role + ' added successfully',
+    redirectURL,
+  });
+});
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -66,9 +83,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentUser = await User.findById(decoded.id);
 
   if (!currentUser) {
-    return next(
-      new AppError('User do not exists in this servers anymore', 401)
-    );
+    return next(new AppError('User do not exists in this server anymore', 401));
   }
 
   req.user = currentUser;
@@ -103,4 +118,29 @@ exports.isLoggedIn = async (req, res, next) => {
 
     return next();
   }
+};
+exports.logout = (req, res) => {
+  res.cookie('jwt', '', {
+    expires: new Date(Date.now() + 1000),
+    httpOnly: false,
+  });
+  res.status(200).render('success', {
+    message: 'logged out successfully',
+    redirectURL: '/',
+  });
+};
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin', 'lead-guide']. role='user'
+    console.log('from restrict function');
+    console.log(req.user);
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+
+    next();
+  };
 };
