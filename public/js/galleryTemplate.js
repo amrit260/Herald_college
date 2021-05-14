@@ -11,13 +11,13 @@ function galleryTemplate() {
       return `   
     <div class="col-md-5 ">
       <div class="card   m-2">
-        <a href=""
+        <div
           ><img
             class="card-img-top"
             src="images/gallery/${el}"
             alt="image"
             style="height: 250px"
-        /></a>
+        /></div>
         <div class="card-body m-1">
          
     

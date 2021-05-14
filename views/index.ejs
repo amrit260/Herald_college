@@ -63,7 +63,7 @@
 	</section> 
 	<section class="container">
 		<a href = "/gallery" class="display-5 text-center text-success"><h4>Gallery</h4></a>
-		<div class="row">
+		<div class="row gallery_user">
 		
 			  <% if (gallery)  {%>
 	
@@ -77,7 +77,7 @@
 			  
 				<div class="col-md-4">
 				  <div class="img-rounded img-fluid m-1">
-					<a href="#" data-lightbox="images" class="zoom">
+					<a  data-lightbox="images" class="zoom">
 					  <img  class="img-circle" src="/images/gallery/<%= gallery[0].images[i] %>" alt="Lights" style="width:100%">
 					  <!-- <div class="caption">
 						<p>Lorem ipsum...</p>
