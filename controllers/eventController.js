@@ -41,20 +41,6 @@ exports.uploadCoverPhoto = upload.single('coverPhoto');
 
 exports.getEvents = catchAsync(async (req, res, next) => {
   const events = await Event.find();
-  if (res.locals.user) {
-    if (
-      res.locals.user.role != 'admin' ||
-      res.locals.user.role != 'superadmin'
-    ) {
-      let a = [];
-      events.forEach((event) => {
-        if (event.publishStatus) {
-          a.push(event);
-        }
-      });
-      events = a;
-    }
-  }
   console.log(req.fromDashboard);
   if (req.fromDashboard) {
     res.locals.events = events;
