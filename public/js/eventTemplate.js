@@ -77,14 +77,16 @@ function eventTemplate() {
           data-toggle="modal"
           style="float: right; margin: 3px; width: 11%"
         >
-        ${el.publishStatus ? 'unpublish' : 'publish'}
+        ${el.publishStatus ? 'Unpublish' : 'Publish'}
         
         </button>
         <div class="modal" id="ejj${index}">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="text-center text-dark">Delete Events</h3>
+              <h3 class="text-center text-dark">${
+                el.publishStatus ? 'Unpublish' : 'Publish'
+              } Event</h3>
               <button type="button" class="close" data-dismiss="modal">
                 &times;
               </button>
@@ -92,7 +94,9 @@ function eventTemplate() {
 
             <div class="modal-body">
               <h5 class="text-dark text-center font-weight-bold">
-                Are you sure you want to delete the Event?
+                Are you sure you want to ${
+                  el.publishStatus ? 'Unpublish' : 'Publish'
+                } the Event?
               </h5>
             </div>
 
@@ -103,10 +107,10 @@ function eventTemplate() {
             <input style="display:none" name="publishStatus" value="${
               el.publishStatus ? false : true
             }" />
-              <button class="btn btn-success" type="submit"  data-eventID = ${
+              <button class="btn btn-success" style="width:100px" type="submit"  data-eventID = ${
                 el._id
               } id = "">
-              ${el.publishStatus ? 'unpublish' : 'publish'}
+              ${el.publishStatus ? 'Unpublish' : 'Publish'}
               </button>
               </form>
               <button
